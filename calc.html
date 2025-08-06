@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg-color: #1e1e1e;
+      --calc-bg: #2c2c2c;
+      --btn-bg: #444;
+      --btn-hover: #666;
+      --text-color: #fff;
+      --accent: #0a84ff;
+      --number-btn: #3a3a3a;
+    }
+
+    body.light {
+      --bg-color: #d4f8d4;
+      --calc-bg: #ffffff;
+      --btn-bg: #e6f4ea;
+      --btn-hover: #cdeac0;
+      --text-color: #000;
+      --accent: #007aff;
+      --number-btn: #e0f2df;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+      transition: background 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .calculator {
+      background-color: var(--calc-bg);
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      width: 350px;
+      transition: background 0.3s ease;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: var(--accent);
+    }
+
+    #display {
+      width: 100%;
+      height: 60px;
+      margin-bottom: 20px;
+      font-size: 24px;
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
+      background-color: var(--btn-bg);
+      color: var(--text-color);
+      text-align: right;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      padding: 18px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: var(--btn-bg);
+      color: var(--text-color);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    button:hover {
+      background-color: var(--btn-hover);
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    .equal {
+      background-color: var(--accent);
+      color: #fff;
+      grid-column: span 2;
+    }
+
+    .clear {
+      background-color: #ff4d4d;
+      color: white;
+    }
+
+    .number {
+      background-color: var(--number-btn);
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" onclick="toggleTheme()">Switch Theme</button>
+
+  <div class="calculator">
+    <h2>Calculator</h2>
+    <input type="text" id="display" disabled />
+
+    <div class="buttons">
+      <button onclick="clearDisplay()" class="clear">C</button>
+      <button onclick="backspace()">←</button>
+      <button onclick="appendValue('%')">%</button>
+      <button onclick="appendValue('/')">÷</button>
+
+      <button onclick="appendValue('7')" class="number">7</button>
+      <button onclick="appendValue('8')" class="number">8</button>
+      <button onclick="appendValue('9')" class="number">9</button>
+      <button onclick="appendValue('*')">×</button>
+
+      <button onclick="appendValue('4')" class="number">4</button>
+      <button onclick="appendValue('5')" class="number">5</button>
+      <button onclick="appendValue('6')" class="number">6</button>
+      <button onclick="appendValue('-')">−</button>
+
+      <button onclick="appendValue('1')" class="number">1</button>
+      <button onclick="appendValue('2')" class="number">2</button>
+      <button onclick="appendValue('3')" class="number">3</button>
+      <button onclick="appendValue('+')">+</button>
+
+      <button onclick="appendValue('0')" class="number">0</button>
+      <button onclick="appendValue('.')">.</button>
+      <button onclick="appendValue('Math.sqrt(')">√</button>
+      <button onclick="appendValue('**2')">x²</button>
+
+      <button onclick="calculate()" class="equal">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+
+    function appendValue(value) {
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function backspace() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculate() {
+      try {
+        display.value = eval(display.value);
+      } catch {
+        display.value = 'Error';
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+    }
+  </script>
+
+</body>
+</html>
